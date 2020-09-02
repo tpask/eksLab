@@ -1,8 +1,11 @@
 keyname=eksworkshop
+roleName=eksworkshop-admin
+instProfileName=c9
+export instanceId=${curl http://169.254.169.254/latest/meta-data/instance-id}
+export AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/region)
 
 #setup EKS env
-yum install -y jq
-
+sudo yum install -y jq 
 
 #setup kubectl:
 sudo curl --silent --location -o /usr/local/bin/kubectl   https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.7/2020-07-08/bin/linux/amd64/kubectl
@@ -24,12 +27,17 @@ ssh-keygen
 aws ec2 import-key-pair --key-name "${keyname}" --public-key-material file://~/.ssh/id_rsa.pub
 
 #
-export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
 echo $AWS_REGION
 test -n "$AWS_REGION" && echo AWS_REGION is "$AWS_REGION" || echo AWS_REGION is not set
-export ACCOUNT_ID=${ACCOUNT_ID}" | tee -a ~/.bash_profile
+ACCOUNT_ID=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document |jq -r .accountId)
+export ACCOUNT_ID=${ACCOUNT_ID} | tee -a ~/.bash_profile
 echo "export AWS_REGION=${AWS_REGION}" | tee -a ~/.bash_profile
 aws configure set default.region ${AWS_REGION}
 aws configure get default.region
-aws sts get-caller-identity --query Arn | grep eksworkshop-admin -q && echo "IAM role valid" || echo "IAM role NOT valid"
+
+#setup role:
+aws ec2 associate-iam-instance-profile --instance-id ${instanceId} --iam-instance-profile Name=${instProfileName}
+rm -f ~/.aws/credentials
+
+
 

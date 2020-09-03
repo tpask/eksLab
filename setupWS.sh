@@ -24,7 +24,7 @@ eksctl version
 
 #setup environment
 ssh-keygen
-aws ec2 import-key-pair --key-name "${keyname}" --public-key-material file://~/.ssh/id_rsa.pub
+aws ec2 import-key-pair --key-name "eksworkshop" --public-key-material fileb://~/.ssh/id_rsa.pub
 
 #
 echo $AWS_REGION

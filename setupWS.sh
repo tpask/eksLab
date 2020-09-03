@@ -6,6 +6,7 @@ export AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/re
 
 #setup EKS env
 sudo yum install -y jq 
+sudo yum install -y bash-completion
 
 #setup kubectl:
 sudo curl --silent --location -o /usr/local/bin/kubectl   https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.7/2020-07-08/bin/linux/amd64/kubectl

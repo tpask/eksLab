@@ -3,7 +3,7 @@
 nodes=1
 maxNodes=3
 minNodes=1
-nodeType=t3.micro
+nodeType=t3.small
 AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/region)
 nodeGrpName=standard-worker
 name=dev-cluster

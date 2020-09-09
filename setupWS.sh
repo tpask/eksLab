@@ -1,7 +1,7 @@
 keyname=eksworkshop
 roleName=eksworkshop-admin
 instProfileName=c9
-export instanceId=${curl http://169.254.169.254/latest/meta-data/instance-id}
+export instanceId=$(curl http://169.254.169.254/latest/meta-data/instance-id)
 export AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/region)
 
 #setup EKS env

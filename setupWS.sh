@@ -40,5 +40,11 @@ aws configure get default.region
 aws ec2 associate-iam-instance-profile --instance-id ${instanceId} --iam-instance-profile Name=${instProfileName}
 rm -f ~/.aws/credentials
 
-
+#install terraform
+curl -O https://releases.hashicorp.com/terraform/0.13.2/terraform_0.13.2_linux_amd64.zip
+unzip terraform_0.13.2_linux_amd64.zip
+rm terraform_0.13.2_linux_amd64.zip
+sudo mv terraform /usr/local/bin
+alias tf=/usr/local/bin/terraform
+echo "tf=/usr/local/terraform"
 
